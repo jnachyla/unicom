@@ -274,7 +274,7 @@ def main():
                 break
 
             if rank == 0:
-                print(f"eval result is {max_score}, epoch is {epoch}")
+                print(f"eval result is {score}, epoch is {epoch}")
             model.train()
     torch.save(best_model, "./best_model.pth")
 
