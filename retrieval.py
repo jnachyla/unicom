@@ -230,7 +230,7 @@ def main():
         max_score = 0
         best_model = None
         early_stopping_counter = 0
-        patience = 3
+        patience = args.patience
         for epoch in range(0, args.epochs):
             if train_sampler is not None:
                 train_sampler.set_epoch(epoch)
