@@ -226,6 +226,9 @@ def main():
             growth_interval=200)
         global_step = 0
         max_score = 0
+        best_model = None
+        early_stopping_counter = 0
+        patience = 3
         for epoch in range(0, args.epochs):
             if train_sampler is not None:
                 train_sampler.set_epoch(epoch)
@@ -259,9 +262,19 @@ def main():
             if isinstance(score, float):
                 if score > max_score:
                     max_score = score
+                    best_model = model.state_dict()
+                    early_stopping_counter = 0
+                else:
+                    early_stopping_counter += 1
+
+            if early_stopping_counter >= args.patience:
+                print("Early stopping triggered!")
+                break
+
             if rank == 0:
                 print(f"eval result is {max_score}, epoch is {epoch}")
             model.train()
+    torch.save(best_model, "./best_model.pth")
 
 
 class SpeedCallBack(object):
