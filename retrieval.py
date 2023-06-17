@@ -51,6 +51,8 @@ parser.add_argument("--aa", type=str, default='rand-m9-mstd0.5-inc1', help="The 
 parser.add_argument("--reprob", type=float, default=0.25, help="The probability of replacing pixels during training using CutOut.")
 parser.add_argument("--remode", type=str, default="pixel", help="The mode of replacement to use during training when using CutOut.")
 parser.add_argument("--recount", type=int, default=1, help="")
+parser.add_argument("--patience", type=int, default=1, help="Patience for early stopping")
+parser.add_argument("--model_path", type=int, default=1, help="Best model path")
 
 
 args = parser.parse_args()
@@ -267,7 +269,7 @@ def main():
                 else:
                     early_stopping_counter += 1
 
-            if early_stopping_counter >= args.patience:
+            if early_stopping_counter >= patience:
                 print("Early stopping triggered!")
                 break
 
